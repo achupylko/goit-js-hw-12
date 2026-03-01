@@ -7,8 +7,8 @@ import {
   clearGallery,
   showLoader,
   hideLoader,
-  showLoadMoreButton,
-  hideLoadMoreButton,
+  showLoadMore,
+  hideLoadMore,
 } from './js/render-functions';
 
 const form = document.querySelector('.form');
@@ -34,6 +34,7 @@ async function submitHendler(event) {
   }
 
   clearGallery();
+  hideLoadMore();
   showLoader();
 
   if (page !== 1) {
@@ -56,8 +57,14 @@ async function submitHendler(event) {
 
     createGallery(images);
 
+    if (totalPage === 1) {
+      showErrorMsg(
+        "We're sorry, but you've reached the end of search results."
+      );
+    }
+
     if (page < totalPage) {
-      showLoadMoreButton();
+      showLoadMore();
     }
 
     form.reset();
@@ -70,7 +77,7 @@ async function submitHendler(event) {
 
 async function loadMoreHamdler() {
   page++;
-  hideLoadMoreButton();
+  hideLoadMore();
   showLoader();
 
   try {
@@ -96,7 +103,7 @@ async function loadMoreHamdler() {
   } finally {
     hideLoader();
     if (page < totalPage) {
-      showLoadMoreButton();
+      showLoadMore();
     }
   }
 }

@@ -59,10 +59,10 @@ export function hideLoader() {
   loader.classList.add('hidden');
 }
 
-export function showLoadMoreButton() {
+export function showLoadMore() {
   loadMoreButton.classList.remove('hidden');
 }
 
-export function hideLoadMoreButton() {
+export function hideLoadMore() {
   loadMoreButton.classList.add('hidden');
 }
