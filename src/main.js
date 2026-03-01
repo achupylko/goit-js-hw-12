@@ -9,8 +9,6 @@ import {
   hideLoader,
   showLoadMoreButton,
   hideLoadMoreButton,
-  enableLoadMoreButton,
-  disableLoadMoreButton,
 } from './js/render-functions';
 
 const form = document.querySelector('.form');
@@ -72,14 +70,14 @@ async function submitHendler(event) {
 
 async function loadMoreHamdler() {
   page++;
-  disableLoadMoreButton();
+  hideLoadMoreButton();
+  showLoader();
 
   try {
     const data = await getImagesByQuery(query, page);
     createGallery(data.hits);
 
     if (page >= totalPage) {
-      hideLoadMoreButton();
       showErrorMsg(
         "We're sorry, but you've reached the end of search results."
       );
@@ -96,7 +94,10 @@ async function loadMoreHamdler() {
   } catch (error) {
     showErrorMsg(error.message);
   } finally {
-    enableLoadMoreButton();
+    hideLoader();
+    if (page < totalPage) {
+      showLoadMoreButton();
+    }
   }
 }
 
