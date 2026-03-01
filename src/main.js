@@ -12,6 +12,8 @@ import {
 const form = document.querySelector('.form');
 const loadMore = document.querySelector('.js-load-more');
 
+const per_page = 15;
+
 let page = 1;
 let query = '';
 let totalPage = 0;
@@ -47,7 +49,7 @@ function submitHendler(event) {
         return;
       }
 
-      totalPage = Math.ceil(data.totalHits / images.length);
+      totalPage = Math.ceil(data.totalHits / per_page);
       console.log(totalPage);
 
       createGallery(images);
