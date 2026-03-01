@@ -9,6 +9,8 @@ import {
   hideLoader,
   showLoadMoreButton,
   hideLoadMoreButton,
+  enableLoadMoreButton,
+  disableLoadMoreButton,
 } from './js/render-functions';
 
 const form = document.querySelector('.form');
@@ -70,7 +72,7 @@ async function submitHendler(event) {
 
 async function loadMoreHamdler() {
   page++;
-  loadMore.disabled = true;
+  disableLoadMoreButton();
 
   try {
     const data = await getImagesByQuery(query, page);
@@ -94,7 +96,7 @@ async function loadMoreHamdler() {
   } catch (error) {
     showErrorMsg(error.message);
   } finally {
-    loadMore.disabled = false;
+    enableLoadMoreButton();
   }
 }
 
