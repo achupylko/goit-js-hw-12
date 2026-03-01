@@ -67,6 +67,7 @@ function submitHendler(event) {
 async function loadMoreHamdler() {
   try {
     page++;
+
     loadMore.disabled = true;
 
     const data = await getImagesByQuery(query, page);
