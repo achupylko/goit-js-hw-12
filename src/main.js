@@ -21,7 +21,7 @@ let totalPage = 0;
 form.addEventListener('submit', submitHendler);
 loadMore.addEventListener('click', loadMoreHamdler);
 
-function submitHendler(event) {
+async function submitHendler(event) {
   event.preventDefault();
 
   const { 'search-text': searchInput } = event.target.elements;
@@ -38,40 +38,39 @@ function submitHendler(event) {
     page = 1;
   }
 
-  getImagesByQuery(query, page)
-    .then(data => {
-      const images = data.hits;
+  try {
+    const data = await getImagesByQuery(query, page);
 
-      if (images.length === 0) {
-        showErrorMsg(
-          'Sorry, there are no images matching your search query. Please try again!'
-        );
-        return;
-      }
+    const images = data.hits;
 
-      totalPage = Math.ceil(data.totalHits / per_page);
-      console.log(totalPage);
+    if (images.length === 0) {
+      showErrorMsg(
+        'Sorry, there are no images matching your search query. Please try again!'
+      );
+      return;
+    }
 
-      createGallery(images);
+    totalPage = Math.ceil(data.totalHits / per_page);
 
-      if (page < totalPage) {
-        loadMore.classList.remove('hidden');
-      }
+    createGallery(images);
 
-      form.reset();
-    })
-    .catch(error => {
-      showErrorMsg(error.message);
-    })
-    .finally(hideLoader);
+    if (page < totalPage) {
+      loadMore.classList.remove('hidden');
+    }
+
+    form.reset();
+  } catch (error) {
+    showErrorMsg(error.message);
+  } finally {
+    hideLoader();
+  }
 }
 
 async function loadMoreHamdler() {
+  page++;
+  loadMore.disabled = true;
+
   try {
-    page++;
-
-    loadMore.disabled = true;
-
     const data = await getImagesByQuery(query, page);
     createGallery(data.hits);
 
