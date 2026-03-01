@@ -70,6 +70,7 @@
   border-radius: 50%;
   color: #ff6b0a;
   animation: fill 1s ease-in infinite alternate;
+  margin-bottom: 36px;
 }
 .loader::before,
 .loader::after {
