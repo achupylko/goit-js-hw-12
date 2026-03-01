@@ -7,6 +7,8 @@ import {
   clearGallery,
   showLoader,
   hideLoader,
+  showLoadMoreButton,
+  hideLoadMoreButton,
 } from './js/render-functions';
 
 const form = document.querySelector('.form');
@@ -55,7 +57,7 @@ async function submitHendler(event) {
     createGallery(images);
 
     if (page < totalPage) {
-      loadMore.classList.remove('hidden');
+      showLoadMoreButton();
     }
 
     form.reset();
@@ -75,7 +77,7 @@ async function loadMoreHamdler() {
     createGallery(data.hits);
 
     if (page >= totalPage) {
-      loadMore.classList.add('hidden');
+      hideLoadMoreButton();
       showErrorMsg(
         "We're sorry, but you've reached the end of search results."
       );
